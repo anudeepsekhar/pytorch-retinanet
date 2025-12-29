@@ -1,8 +1,5 @@
 # pytorch-retinanet
 
-![img3](https://github.com/yhenon/pytorch-retinanet/blob/master/images/3.jpg)
-![img5](https://github.com/yhenon/pytorch-retinanet/blob/master/images/5.jpg)
-
 Pytorch  implementation of RetinaNet object detection as described in [Focal Loss for Dense Object Detection](https://arxiv.org/abs/1708.02002) by Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He and Piotr Dollár.
 
 This implementation is primarily designed to be easy to read and simple to modify.
@@ -17,18 +14,12 @@ Currently, this repo achieves 33.5% mAP at 600px resolution with a Resnet-50 bac
 2) Install the required packages:
 
 ```
-apt-get install tk-dev python-tk
+apt-get install tk-dev
 ```
 
 3) Install the python packages:
 	
-```
-pip install pandas
-pip install pycocotools
-pip install opencv-python
-pip install requests
-
-```
+`pip install -r requirements.txt`
 
 ## Training
 
@@ -104,16 +95,12 @@ You can also configure csv_eval.py script to save the precision-recall curve on 
 
 ## Visualization
 
-To visualize the network detection, use `visualize.py`:
+To visualize the network detection, use `visualizevisualize_single_image.py`:
+```
+python ./visualize_single_image.py --image_dir images/ --model_path ./csv_retinanet_1.pt --class_list ./data/classes.csv --output_dir ./dets
+```
 
-```
-python visualize.py --dataset coco --coco_path ../coco --model <path/to/model.pt>
-```
-This will visualize bounding boxes on the validation set. To visualise with a CSV dataset, use:
 
-```
-python visualize.py --dataset csv --csv_classes <path/to/train/class_list.csv>  --csv_val <path/to/val_annots.csv> --model <path/to/model.pt>
-```
 
 ## Model
 
@@ -172,14 +159,4 @@ bird,2
 
 ## Acknowledgements
 
-- Significant amounts of code are borrowed from the [keras retinanet implementation](https://github.com/fizyr/keras-retinanet)
-- The NMS module used is from the [pytorch faster-rcnn implementation](https://github.com/ruotianluo/pytorch-faster-rcnn)
-
-## Examples
-
-![img1](https://github.com/yhenon/pytorch-retinanet/blob/master/images/1.jpg)
-![img2](https://github.com/yhenon/pytorch-retinanet/blob/master/images/2.jpg)
-![img4](https://github.com/yhenon/pytorch-retinanet/blob/master/images/4.jpg)
-![img6](https://github.com/yhenon/pytorch-retinanet/blob/master/images/6.jpg)
-![img7](https://github.com/yhenon/pytorch-retinanet/blob/master/images/7.jpg)
-![img8](https://github.com/yhenon/pytorch-retinanet/blob/master/images/8.jpg)
+- Primary source from https://github.com/yhenon/pytorch-retinanet

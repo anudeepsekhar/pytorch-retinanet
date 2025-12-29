@@ -32,7 +32,9 @@ def draw_caption(image, box, caption):
     cv2.putText(image, caption, (b[0], b[1] - 10), cv2.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1)
 
 
-def detect_image(image_path, model_path, class_list):
+def detect_image(image_path, model_path, class_list, output_dir):
+
+    os.makedirs(output_dir, exist_ok=True)
 
     with open(class_list, 'r') as f:
         classes = load_classes(csv.reader(f, delimiter=','))
@@ -41,7 +43,7 @@ def detect_image(image_path, model_path, class_list):
     for key, value in classes.items():
         labels[value] = key
 
-    model = torch.load(model_path)
+    model = torch.load(model_path, weights_only=False)
 
     if torch.cuda.is_available():
         model = model.cuda()
@@ -111,12 +113,12 @@ def detect_image(image_path, model_path, class_list):
                 print(bbox, classification.shape)
                 score = scores[j]
                 caption = '{} {:.3f}'.format(label_name, score)
-                # draw_caption(img, (x1, y1, x2, y2), label_name)
                 draw_caption(image_orig, (x1, y1, x2, y2), caption)
                 cv2.rectangle(image_orig, (x1, y1), (x2, y2), color=(0, 0, 255), thickness=2)
 
-            cv2.imshow('detections', image_orig)
-            cv2.waitKey(0)
+            output_path = os.path.join(output_dir, img_name)
+            cv2.imwrite(output_path, image_orig)
+            print(f'Saved: {output_path}')
 
 
 if __name__ == '__main__':
@@ -126,7 +128,8 @@ if __name__ == '__main__':
     parser.add_argument('--image_dir', help='Path to directory containing images')
     parser.add_argument('--model_path', help='Path to model')
     parser.add_argument('--class_list', help='Path to CSV file listing class names (see README)')
+    parser.add_argument('--output_dir', default='./output', help='Path to save output images')
 
     parser = parser.parse_args()
 
-    detect_image(parser.image_dir, parser.model_path, parser.class_list)
+    detect_image(parser.image_dir, parser.model_path, parser.class_list, parser.output_dir)
