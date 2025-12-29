@@ -31,8 +31,6 @@ python download.py
 ```
 
 ### Prepare Data
-Create classes.csv
-
 ```
 # While in ./data
 echo "face,0" > classes.csv
