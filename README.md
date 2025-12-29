@@ -21,6 +21,24 @@ apt-get install tk-dev
 	
 `pip install -r requirements.txt`
 
+## Getting training dataset from Kaggle
+
+### Download Data
+
+```
+cd data
+python download.py
+```
+
+### Prepare Data
+Create classes.csv
+
+```
+# While in ./data
+echo "face,0" > classes.csv
+python prepare_data.py --dataset-dir <path printed after download> --classes-csv classes.csv --output-dir ./
+```
+
 ## Training
 
 The network can be trained using the `train.py` script. Currently, two dataloaders are available: COCO and CSV. For training on coco, use
