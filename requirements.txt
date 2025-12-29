@@ -1,0 +1,11 @@
+pandas
+pillow
+matplotlib
+tqdm
+pycocotools
+opencv-python
+requests
+torch
+torchvision
+scikit-image
+kagglehub

@@ -101,3 +101,12 @@ ENV/
 
 *.zip
 *.pt
+
+# Ignore model weights
+*.pth
+*.h5
+# Ignore dataset files
+*.csv
+*.json
+*.xml
+data/test_bbox.png

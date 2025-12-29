@@ -18,6 +18,7 @@ import skimage.color
 import skimage
 
 from PIL import Image
+from six import raise_from
 
 
 class CocoDataset(Dataset):
@@ -211,9 +212,10 @@ class CSVDataset(Dataset):
 
     def load_image(self, image_index):
         img = skimage.io.imread(self.image_names[image_index])
-
-        if len(img.shape) == 2:
-            img = skimage.color.gray2rgb(img)
+        if len(img.shape) == 2:  # grayscale
+            img = np.stack([img] * 3, axis=-1)
+        elif img.shape[2] == 4:  # RGBA
+            img = img[:, :, :3]
 
         return img.astype(np.float32)/255.0
 
